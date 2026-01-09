@@ -1,0 +1,26 @@
+VER PANTALLA ANDROID EN QUEST
+Sideload en Quest
+- Termux: https://f-droid.org/es/packages/com.termux/
+- Termux-X11: https://github.com/termux/termux-x11/releases/tag/nightly
+Paquetes necesarios en Termux Quest
+pkg install android-tools scrcpy x11-repo
+pkg install termux-x11-nightly openbox
+- android-tools : ADB, para conectar el móvil con las Quest
+- scrcpy : Para recibir la pantalla del móvil mediante el ADB
+- x11-repo : Repositorio para los paquetes X11
+- termux-x11-nightly : Para el funcionamiento de Termux-X11
+- openbox : Gestor de ventanas ligero para mostrar scrcpy
+Abrir puerto 5555 del móvil: Con un ordenador y con el móvil conectado a la misma red que las Quest, ejecuta adb tcpip 5555 para reiniciar el puerto 5555 del móvil. A partir de aquí, siempre y cuando no cambies la red en la que está conectado el móvil, ya no necesitas más el ordenador.
+Abrir Termux-X11 en las Quest
+Comandos en Termux Quest
+- adb connect X.X.X.X:5555 #Reemplazando X.X.X.X por la IP del móvil en la red
+- termux-x11 :0 &
+- export DISPLAY=:0
+- openbox &
+- scrcpy
+*creo que se necesita ser desarrollador en tu móvil Android y activar cosas de debugging para que todo esto funcione
+
+Y con todo esto ya tendrías una conexión directa de tu móvil hacia las Quest, y así poder ver la pantalla en tus gafas VR.
+Espero que te sirva :)
+
+MikeCat out :3
