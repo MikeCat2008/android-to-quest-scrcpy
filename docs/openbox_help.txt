@@ -1,0 +1,23 @@
+Syntax: openbox [options]
+
+Options:
+  --help              Display this help and exit
+  --version           Display the version and exit
+  --replace           Replace the currently running window manager
+  --config-file FILE  Specify the path to the config file to use
+  --sm-disable        Disable connection to the session manager
+
+Passing messages to a running Openbox instance:
+  --reconfigure       Reload Openbox's configuration
+  --restart           Restart Openbox
+  --exit              Exit Openbox
+
+Debugging options:
+  --sync              Run in synchronous mode
+  --startup CMD       Run CMD after starting
+  --debug             Display debugging output
+  --debug-focus       Display debugging output for focus handling
+  --debug-session     Display debugging output for session management
+  --debug-xinerama    Split the display into fake xinerama screens
+
+Please report bugs at http://bugzilla.icculus.org
