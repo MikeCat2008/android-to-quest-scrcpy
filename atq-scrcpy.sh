@@ -3,4 +3,4 @@
 export DISPLAY=:0
 termux-x11 :0 &
 openbox &
-scrcpy
+scrcpy --no-audio --video-codec=h264 --video-bit-rate=6M --max-size=800 --no-audio
