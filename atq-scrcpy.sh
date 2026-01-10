@@ -1,8 +1,36 @@
 #!/data/data/com.termux/files/usr/bin/bash
+# ANDROID TO QUEST SCRCPY
 
+
+# ENVIROMENT
 export DISPLAY=:0
-termux-x11 :0 &
-openbox &
+
+tmp_ready_file="$TMPDIR/.ilovefurries-uwu" # nobody's gonna know :3 - MikeCat2008
+rm -f $tmp_ready_file
+
+
+# CLEANUP FUNCION ON EXIT
+cleanup(){
+    echo -e "\n[] Cleaning up ..."
+    rm -f $tmp_ready_file
+
+    echo "[] Stopping backround processes"
+    kill $(jobs -p) 2>/dev/null
+}
+
+trap cleanup EXIT
+
+
+# TERMUX-X11 WITH OPENBOX
+echo "[] Starting Termux-X11 with Openbox..."
+termux-x11 :0 -xstartup "openbox --startup 'touch $tmp_ready_file'" &
+
+echo "[] Waiting for Openbox..."
+until [ -f $tmp_ready_file ]; do
+    sleep 0.1
+done
+echo "[] Openbox is ready"
+
 
 # SCRCPY
 scrcpy_flags=(
@@ -16,4 +44,7 @@ scrcpy_flags=(
 )
 
 # Launch scrcpy with the defined flags
+echo "[] Starting scrcpy..."
 scrcpy "${scrcpy_flags[@]}"
+
+echo "[] scrcpy process has ended"
