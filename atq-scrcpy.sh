@@ -37,12 +37,16 @@ cleanup(){
 trap cleanup EXIT
 
 # --- TERMUX-X11 WITH OPENBOX ---
+echo -e "${INFO} Launching Termux-X11 App..."
+# Automaticaly launching Termux-X11 App
+am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity
+
 echo -e "${INFO} Starting Termux-X11 with Openbox..."
-# Launch Termux-X11 
+# Launch Termux-X11 Server
 termux-x11 :0 -xstartup "openbox --startup 'touch $tmp_ready_file'" &
 
 # Wait loop until Openbox initialices
-echo -e "${INFO} Waiting for Openbox..."
+echo -e "${WAIT} Waiting for Openbox..."
 until [ -f $tmp_ready_file ]; do
     sleep 0.1
 done
