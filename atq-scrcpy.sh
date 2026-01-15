@@ -15,25 +15,25 @@ INFO="[ ${BLUE}INFO${NC} ]"
 WAIT="[ ${YELLOW}WAIT${NC} ]"
 EMPTY="        "
 
-# --- ENVIROMENT ---
+# --- ENVIRONMENT ---
 export DISPLAY=:0
 
-# Hidden temporaly file to verify if Openbox has initialiced
+# Hidden temporaly file to verify if Openbox has initialized
 tmp_ready_file="$TMPDIR/.ilovefurries-uwu" # nobody's gonna know :3 - MikeCat2008
-rm -f $tmp_ready_file
+rm -f "$tmp_ready_file"
 
-# --- CLEANUP FUNCION ---
+# --- CLEANUP FUNCTION ---
 cleanup(){
     echo -e "${INFO} Cleaning up ..."
-    rm -f $tmp_ready_file
+    rm -f "$tmp_ready_file"
 
-    echo -e "${INFO} Stopping backround processes"
+    echo -e "${INFO} Stopping background processes"
     kill $(jobs -p) 2>/dev/null
 
     echo -e "${OK} Cleanup complete. Bye! :3"
 }
 
-# Trap signal EXIT to ensure cleanup() allways get executed
+# Trap signal EXIT to ensure cleanup() always get executed
 trap cleanup EXIT
 
 # --- TERMUX-X11 WITH OPENBOX ---
@@ -47,7 +47,7 @@ termux-x11 :0 -xstartup "openbox --startup 'touch $tmp_ready_file'" &
 
 # Wait loop until Openbox initialices
 echo -e "${WAIT} Waiting for Openbox..."
-until [ -f $tmp_ready_file ]; do
+until [ -f "$tmp_ready_file" ]; do
     sleep 0.1
 done
 echo -e "${OK} Openbox is ready"
