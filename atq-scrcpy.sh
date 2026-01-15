@@ -13,16 +13,16 @@ NC='\033[0m' # No Color (Reset)
 OK="[  ${GREEN}OK${NC}  ]"
 INFO="[ ${BLUE}INFO${NC} ]"
 WAIT="[ ${YELLOW}WAIT${NC} ]"
-EMPTY="        "
+ERROR="[ ${RED}ERR.${NC} ]"
 
 # --- ENVIRONMENT ---
 export DISPLAY=:0
 
 # Hidden temporaly file to verify if Openbox has initialized
 tmp_ready_file="$TMPDIR/.ilovefurries-uwu" # nobody's gonna know :3 - MikeCat2008
-rm -f "$tmp_ready_file"
 
-# --- CLEANUP FUNCTION ---
+# --- FUNCTIONS ---
+
 cleanup(){
     echo -e "${INFO} Cleaning up ..."
     rm -f "$tmp_ready_file"
@@ -35,6 +35,72 @@ cleanup(){
 
 # Trap signal EXIT to ensure cleanup() always get executed
 trap cleanup EXIT
+
+check_dependencies() {
+    local dependencies=("android-tools" "scrcpy" "termux-x11-nightly" "openbox")
+    local missing_deps=()
+
+    echo -e "${INFO} Verifying environment..."
+
+    # Check X11 Repo
+    if [ ! -f "$PREFIX/etc/apt/sources.list.d/x11.list" ]; then
+        echo -e "${ERROR} X11 Repository not detected."
+        while true; do
+            echo -ne "${YELLOW}[?] Do you want to enable X11 repo? (y/n): ${NC}"
+            read x11_choice
+            case $x11_choice in
+                [Yy]* )
+                    echo -e "${WAIT} Enabling X11 repository..."
+                    pkg update && pkg install x11-repo -y
+                    break;;
+                [Nn]* )
+                    echo -e "${ERROR} X11 is required for this project. Exiting..."
+                    exit 1;;
+                * ) echo -e "${YELLOW}Please answer yes (y) or no (n).${NC}";;
+            esac
+        done
+    else
+        echo -e "${OK} X11 Repository enabled."
+    fi
+
+    # Check Packages
+    for pkg in "${dependencies[@]}"; do
+        if ! dpkg -s "$pkg" &>/dev/null; then
+            echo -e "${INFO} Package ${pkg} is ${RED}missing${NC}."
+            missing_deps+=("$pkg")
+        else
+            echo -e "${OK} Package ${pkg} is ${GREEN}installed${NC}."
+        fi
+    done
+
+    # Install missing packages
+    if [ ${#missing_deps[@]} -ne 0 ]; then
+        echo -e "${INFO} Missing packages: ${YELLOW}${missing_deps[*]}${NC}"
+        while true; do
+            echo -ne "${YELLOW}[?] Install them now? (y/n): ${NC}"
+            read pkg_choice
+            case $pkg_choice in
+                [Yy]* )
+                    echo -e "${WAIT} Updating and installing..."
+                    pkg update && pkg install "${missing_deps[@]}" -y
+                    break;;
+                [Nn]* )
+                    echo -e "${ERROR} Missing critical dependencies. Aborting."
+                    exit 1;;
+                * ) echo -e "${YELLOW}Please answer yes (y) or no (n).${NC}";;
+            esac
+        done
+    fi
+    echo -e "${OK} All dependencies are satisfied."
+}
+
+# --- MAIN EXECUTION ---
+
+# First, check if everything is installed
+check_dependencies
+
+# Prepare environment
+rm -f "$tmp_ready_file"
 
 # --- TERMUX-X11 WITH OPENBOX ---
 echo -e "${INFO} Launching Termux-X11 App..."
@@ -64,7 +130,7 @@ scrcpy_flags=(
 )
 
 # Launch scrcpy with the defined flags
-echo -e "${INFO} Starting scrcpy...\n${EMPTY} End scrcpy with SIGINT (Ctrl+C)"
+echo -e "${INFO} Starting scrcpy...\n\n${YELLOW}End scrcpy with SIGINT (Ctrl+C)${NC}\n"
 scrcpy "${scrcpy_flags[@]}"
 
-echo -e "${INFO} scrcpy process has ended"
+echo -e "\n${INFO} scrcpy process has ended"
