@@ -14,6 +14,7 @@ OK="[  ${GREEN}OK${NC}  ]"
 INFO="[ ${BLUE}INFO${NC} ]"
 WAIT="[ ${YELLOW}WAIT${NC} ]"
 ERROR="[ ${RED}ERR.${NC} ]"
+EMPTY="        "
 
 # --- ENVIRONMENT ---
 export DISPLAY=:0
@@ -39,6 +40,7 @@ trap cleanup EXIT
 check_dependencies() {
     local dependencies=("android-tools" "scrcpy" "termux-x11-nightly" "openbox")
     local missing_deps=()
+    local uninstalled_deps=()
 
     echo -e "${INFO} Verifying environment..."
 
@@ -59,6 +61,14 @@ check_dependencies() {
                 * ) echo -e "${YELLOW}Please answer yes (y) or no (n).${NC}";;
             esac
         done
+
+        # Re-check repository after installation attempt
+        if [ ! -f "$PREFIX/etc/apt/sources.list.d/x11.list" ]; then
+            echo -e "${ERROR} The X11 could not be installed. Exiting..."
+            echo -e "${EMPTY} Please check your network connection or main repository access."
+            echo -e "${EMPTY} This may be caused by network restrictions or blocked repositories."
+            exit 1
+        fi
     else
         echo -e "${OK} X11 Repository enabled."
     fi
@@ -90,6 +100,23 @@ check_dependencies() {
                 * ) echo -e "${YELLOW}Please answer yes (y) or no (n).${NC}";;
             esac
         done
+
+        # Re-check packages after installation attempt
+        for pkg in "${missing_deps[@]}"; do
+            if ! dpkg -s "$pkg" &>/dev/null; then
+                echo -e "${ERROR} Package ${pkg} is ${RED}still missing${NC}."
+                uninstalled_deps+=("$pkg")
+            else
+                echo -e "${OK} Package ${pkg} has been ${GREEN}successfully installed${NC}."
+            fi
+        done
+        if [ ${#uninstalled_deps[@]} -ne 0 ]; then
+            echo -e "${ERROR} The following dependencies could not be installed:"
+            echo -e "${EMPTY} ${RED}${uninstalled_deps[*]}${NC}"
+            echo -e "${EMPTY} Please check your network connection or repositories access."
+            echo -e "${EMPTY} This may be caused by network restrictions or blocked repositories."
+            exit 1
+        fi
     fi
     echo -e "${OK} All dependencies are satisfied."
 }
