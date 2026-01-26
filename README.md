@@ -4,9 +4,9 @@
 # Android to Quest - scrcpy
 A free and open-source project to view and interact with your Android phone on your Quest VR Headset (or any other device running Android).
 
-"Android to Quest - scrcpy" (atq-scrcpy) creates a direct connection between your Android phone and your Quest without relying on any third-party services	, by running [scrcpy](https://github.com/Genymobile/scrcpy) on [Termux](https://github.com/termux/termux-app/) in your Quest, and then displaying your phone screen on [Termux:X11](https://github.com/termux/termux-x11/). 
+"Android to Quest - scrcpy" (atq-scrcpy) creates a direct connection between your Android phone and your Quest without relying on any third-party services, by running [scrcpy](https://github.com/Genymobile/scrcpy) on [Termux](https://github.com/termux/termux-app/) in your Quest, and then displaying your phone screen on [Termux:X11](https://github.com/termux/termux-x11/). 
 
-> DISCLAMER  
+> DISCLAIMER  
 > This project is not affiliated with Meta, Oculus, Xiaomi, Genymobile or any other brand.  
 > Use it at your own risk.
 
@@ -127,7 +127,9 @@ To stop the program, go back to the Termux tab and press `Ctrl+C` in order to se
 - scrcpy [v3.3.4](https://github.com/Genymobile/scrcpy/releases/tag/v3.3.4)
 
 ## License
-Right now idk... Maybe GPL 3.0? i like tha' copyleft idea
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
+
+License guidance by [choosealicense.com](https://choosealicense.com).
 
 ---
 > First public GitHub project! :D Learned a lot building this - hope it helps someone else! :3
