@@ -26,8 +26,8 @@ Around 1GB of free storage is recommended to install all the APKs and Termux Pac
 ### Quest - Developer Mode
 Developer Mode is needed on your Quest in order to be able to sideload all the needed APKs.
 
-To enable this requirement, follow these steps or watch this simple [tutorial from SideQuest](https://www.youtube.com/watch?v=3n1T59v4HTY) to do so.
-1. Go to [developers.meta.com](https://developers.meta.com/) (you can also go to the old URL [dashboard.oculus.com](https://dashboard.oculus.com), but nowadays it is only a redirect to the newer URL) and sign in with your Meta Account.
+To enable this requirement, follow these steps or watch this [simple tutorial from SideQuest](https://www.youtube.com/watch?v=3n1T59v4HTY) to do so.
+1. Go to [developers.meta.com](https://developers.meta.com/horizon/manage) (you can also go to the old URL [dashboard.oculus.com](https://dashboard.oculus.com), but nowadays it is only a redirect to the newer URL) and sign in with your Meta Account.
 2. Create a "New Organization" with whatever name you want, as long as it isn't already picked (personally, I used my own username). Then accept the "Developer Non-Disclosure Agreement".
 3. Verify your account by either setting up a Two-Factor Authentication or by adding your credit card.
 4. Open your Meta Horizon App where you have synced your Quest. Make sure to have turned on your headset and connected it to the same network as your phone. Go to `Devices > <Your Quest Headset> > Headset Settings > Developer Settings` and enable `Developer Mode`.
