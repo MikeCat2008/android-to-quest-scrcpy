@@ -10,6 +10,33 @@ A free and open-source project to view and interact with your Android phone on y
 > This project is not affiliated with Meta, Oculus, Xiaomi, Genymobile or any other brand.  
 > Use it at your own risk.
 
+---
+
+## Project Status
+
+> **IMPORTANT**  
+> **-- ! --** **This project is no longer actively maintained.**
+
+After publishing this project, I discovered another open-source solution that fulfills the same goals in a simpler and more integrated way.
+
+**ScreenStream** - https://github.com/dkrivoruchko/ScreenStream  
+(Recommended: [F-Droid build](https://f-droid.org/packages/info.dvkr.screenstream/))
+
+ScreenStream provides a fully local, open-source solution that only depends on your phone, Quest and a WiFi connection, which fits the original goal of this project.
+
+For most users, ScreenStream will likely be the better option today.
+
+That said, this repository will remain public as:
+- A reference implementation using scrcpy + Termux
+- A learning resource
+- My first GitHub project :)
+
+Thank you for reading this!
+
+> MikeCat out ;3
+
+---
+
 ## Requirements
 
 ### Quest - Free Storage
